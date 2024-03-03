@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Tutorials</title>
+  <style>
+    /* Menu Styles */
+    #videoMenu {
+      position: relative;
+      display: inline-block;
+      font-family: Arial, sans-serif;
+      margin-top: 20px;
+    }
+
+    #videoMenu button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    #videoMenu button:hover {
+      background-color: #45a049;
+    }
+
+    #videoMenuContent {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 200px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 5px;
+    }
+
+    #videoMenuContent a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s;
+    }
+
+    #videoMenuContent a:hover {
+      background-color: #ddd;
+    }
+
+    /* Popup Styles */
+    #videoPlayerPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0,0,0,0.5);
+      z-index: 2;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+    }
+
+    #videoPlayerPopup iframe {
+      width: 640px;
+      height: 360px;
+      border: none;
+    }
+
+    #videoPlayerPopup button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      position: absolute;
+      top: -30px;
+      right: 20px;
+      z-index: 3;
+    }
+
+    #videoPlayerPopup button:hover {
+      background-color: #d32f2f;
+    }
+    .dropdown-right {
+        display: flex;
+        align-items: center;
+    }
+    
+    .dropdown-right label {
+        margin-right: 10px;
+    }
+    
+    .dropdown-right select {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    .dropdown-right button {
+        padding: 8px 16px;
+        font-size: 14px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .dropdown-right button:hover {
+        background-color: #45a049;
+    }
+    
+  </style>
+</head>
+<body>
+
+<!-- Video Tutorials Menu -->
+<div id="videoMenu">
+  <button onclick="toggleVideoMenu()">Video Tutorials</button>
+  <div id="videoMenuContent">
+    <a href="#" onclick="loadVideo('MXJoVCn5njA')">Video 1</a>
+    <a href="#" onclick="loadVideo('k2Dgw4tPE88')">Video 2</a>
+    <!-- Add more video links as needed -->
+  </div>
+</div>
+
+<!-- Video Player Popup -->
+<div id="videoPlayerPopup">
+  <button onclick="closeVideoPlayer()">Close</button>
+  <iframe id="videoPlayer" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<script>
+  function toggleVideoMenu() {
+    var menuContent = document.getElementById('videoMenuContent');
+    if (menuContent.style.display === 'block') {
+      menuContent.style.display = 'none';
+    } else {
+      menuContent.style.display = 'block';
+    }
+  }
+
+  function loadVideo(videoId) {
+    var menuContent = document.getElementById('videoMenuContent');
+    menuContent.style.display = 'none'; // Close the submenu
+    var iframe = document.getElementById('videoPlayer');
+    var src = 'https://www.youtube.com/embed/' + videoId;
+    iframe.src = src;
+    document.getElementById('videoPlayerPopup').style.display = 'block';
+  }
+
+  function closeVideoPlayer() {
+    document.getElementById('videoPlayerPopup').style.display = 'none';
+    // Stop video playback if needed
+    document.getElementById('videoPlayer').src = '';
+  }
+</script>
+
+<div  class="dropdown-right">    <button onclick="playSound()"><b>Auditory Feedback</b></button>
+</div>
+<div class="dropdown-right">
+    <label for="languageDropdown"><b>Language:</b></label>
+    <div class="dropdown-right">
+        <select id="languageDropdown" onchange="languageDropdownChange()">
+            <option value="English">English</option>
+            <option value="Telugu">Telugu</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Hindi">Hindi</option>
+        </select>
+      
+    </div>
+</div>
+
+
+</body>
+</html>

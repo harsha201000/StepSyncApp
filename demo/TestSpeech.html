@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Speech</title>
+</head>
+<body>
+  <textarea id="text-to-read" rows="4" cols="50">అరమండి - చిత్రంలో చూపిన విధంగా మీ శరీరాన్ని ఉంచడానికి ప్రయత్నించండి</textarea>
+  <button onclick="readText()">Read Text</button>
+
+  <script>
+    function readText() {
+        var text = document.getElementById('text-to-read').value;
+        var words = text.split(' ');
+        var speech = new SpeechSynthesisUtterance();
+  
+        // Clear previous utterances
+        window.speechSynthesis.cancel();
+  
+        // Set language
+        // For example, to set the language to Telugu (India):
+        speech.lang = 'te-IN';
+  
+        words.forEach(function(word) {
+          if (word.trim() !== '') {
+            speech.text = word;
+            window.speechSynthesis.speak(speech);
+          }
+        });
+      }
+  </script>
+</body>
+</html>

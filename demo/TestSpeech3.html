@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Speech</title>
+</head>
+<body>
+  <div id="feedback-text" style="font-weight: bold; margin-top: 10px;">
+    సగం కూర్చోండి! ప్రయత్నిస్తూ ఉండు
+   <!-- Aramandi - Try to position your body as shown in picture--></div>
+  <button onclick="readText()">Read Text</button>
+
+  <script>
+    function readText() {
+      var feedbackDiv = document.getElementById('feedback-text');
+      var text = feedbackDiv.textContent;
+
+      var speech = new SpeechSynthesisUtterance();
+
+      speech.text = text;
+      speech.lang ="te-IN";
+      speech.volume = 1;
+      speech.rate = 1;
+      speech.pitch = 1;
+
+      window.speechSynthesis.speak(speech);
+    }
+  </script>
+</body>
+</html>

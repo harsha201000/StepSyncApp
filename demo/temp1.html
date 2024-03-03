@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Page Title</title>
+  <style>
+    /* Add your styles here */
+    #dropdownContainer {
+      display: flex;
+      justify-content: space-between; /* Align items with space between them */
+      align-items: center; /* Center items vertically */
+      padding: 10px; /* Add some padding for better appearance */
+    }
+
+    .dropdown-left,
+    .dropdown-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    label {
+      margin-bottom: 5px;
+    }
+
+    select, button {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .dropdown-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-right > div {
+      margin-right: 10px; /* Add margin between elements */
+    }
+  </style>
+</head>
+<body>
+
+<!-- Your existing HTML code -->
+
+<div id="dropdownContainer">
+    <div class="dropdown-left">
+        <label for="dropdown1">Bharathanatyam Pose:</label>
+        <select id="dropdown1" onchange="dropdownChange()">               
+            <option value="Aramandi">Aramandi</option>
+            <option value="Muramandi">Muramandi</option>
+        </select>
+    </div>
+
+    <div class="dropdown-right">
+      <div>
+      <button onclick="playSound()">Auditory Feedback</button>
+    </div>
+        <div>
+            <label for="languageDropdown">Language:</label>
+            <div>
+            <select id="languageDropdown" onchange="languageDropdownChange()">
+                <option value="English">English</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Hindi">Hindi</option>
+            </select>
+          </div>
+            
+        </div>
+       
+    </div>
+</div>
+
+</body>
+</html>

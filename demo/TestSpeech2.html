@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Speech</title>
+</head>
+<body>
+  <textarea id="text-to-read" rows="4" cols="50">Enter text to be read out loud here.</textarea>
+  <select id="language-select">
+    <option value="en-US">English</option>
+    <option value="te-IN">Telugu</option>
+    <option value="hi-IN">Hindi</option>
+  </select>
+  <button onclick="readText()">Read Text</button>
+
+  <!-- Include Google Cloud Text-to-Speech client library -->
+  <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+  <script>
+    function onLoadCallback() {
+      // Google Cloud Text-to-Speech client library loaded
+      console.log("Google Cloud Text-to-Speech client library loaded");
+    }
+
+    function readText() {
+      if (typeof google !== 'undefined' && google.texttospeech) {
+        var text = document.getElementById('text-to-read').value;
+        var selectedLanguage = document.getElementById('language-select').value;
+
+        // Create Text-to-Speech client
+        var client = new google.texttospeech.TextToSpeechClient();
+
+        // Construct the request
+        var request = {
+          input: {text: text},
+          voice: {languageCode: selectedLanguage, ssmlGender: 'NEUTRAL'},
+          audioConfig: {audioEncoding: 'MP3'},
+        };
+
+        // Perform the text-to-speech request
+        client.synthesizeSpeech(request, function(response) {
+          var audioContent = response.audioContent;
+          var audio = new Audio('data:audio/mp3;base64,' + audioContent);
+          audio.play();
+        }, function(error) {
+          console.error('Error:', error);
+        });
+      } else {
+        console.error('Google Cloud Text-to-Speech client library not loaded');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StepSync</title>
+    <link rel="icon" type="image/png" href="bharathanatyam_dance_icon.png">
+    <style>
+         /* Set background image for the whole page */
+         body {
+            background-image: url('theme1.jpg'); /* Replace 'your-background-image.jpg' with your image path */
+            background-size: 100% 100%;
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-attachment: fixed; /* Keep the background image fixed when scrolling */
+            opacity: 0.9; /* Set the overall opacity (adjust as needed) */
+            overflow: hidden; /* Disable scrolling */
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Ensures the background covers the entire viewport height */
+       
+        }
+
+        /* Add some additional styling for better readability */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: lightgray; /* Fallback background color in case the image is not loaded or supported */
+        }
+
+
+        #stepSyncTitle {
+            font-family: 'Dancing Script', revert; /* Choose a dance-themed font */
+            font-size: 36px;
+            color: #ff45409e; /* Pink color, you can change it to your preferred color */
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
+            margin-top: 30px; /* Adjust top margin for spacing */
+            top: 10%;
+        }
+        
+        #logo-container {
+            text-align: center;
+            top:20%;
+            margin-top: 40px;
+        }
+
+        #logo {
+            width: 300px; /* Adjust the width as needed */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+            margin: 0 auto;
+            opacity: 0.9; /* Set the opacity (0 to 1) */
+            margin-top: 50px;
+        }
+        #container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-left: 10%;
+            margin-right: 15%;
+        }
+
+        .panel {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            text-align: center; /* Center align content */
+            margin-right: 5%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px; /* Add margin for spacing */
+        }
+
+
+        .header {
+            font-weight: bold;
+        }
+
+        /* Set a lower z-index for the webcam canvas */
+        #canvas-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        #dropdownContainer {
+            display: flex;
+            justify-content: space-between; /* Align items with space between them */
+            align-items: center; /* Center items vertically */
+            padding: 10px; /* Add some padding for better appearance */
+            margin-bottom: 10px;
+            z-index: 2;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 1%;
+          }
+      
+          .dropdown-left,
+          .dropdown-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          }
+      
+          label {
+            margin-bottom: 5px;
+          }
+      
+          select, button {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          }
+      
+          button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+          }
+
+
+        
+        .label-container {
+            position: relative;
+            z-index: 2; /* Set a higher z-index for the label container */
+        }
+
+        #dropdown2 {
+            margin-top: 10px; /* Adjust the margin for spacing */
+            margin-left: auto; /* Move Dropdown 2 to the right */
+            top: 10%;
+            left: 10%;
+        }
+
+        #languageDropdown {
+            align-items: flex-end;
+            margin-top: 10px; /* Adjust the margin for spacing */
+            top: 10%;
+            right: 10%;
+            
+        }
+
+        /* Style for textbox outside the panels */
+        #textboxContainer {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #textbox1 {
+            width: 100%; /* Make Text Box 1 take the full width */
+        }
+        .progress-bar-container {
+            margin-bottom: 20px;
+        }
+    
+        .progress-bar {
+            height: 30px;
+            background-color: #e0e0e0;
+            text-align: center;
+            line-height: 30px;
+            color: #000;
+        }
+
+        
+
+        .text-container {
+            position: absolute;
+            top: -30px; /* Adjust the top position as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px;
+            background-color: #fff; /* Background color for the rectangle */
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Optional: Add a shadow effect */
+            z-index: 2;
+        }
+        
+        .text-content {
+            font-weight: bold;
+        }
+        #pageTitle {
+            text-align: center;
+        }
+
+        /* Style for the feedback container */
+        #feedback-container {
+            position: fixed;
+            top: 93%; /* Adjust the top position as needed */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #baae7717;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(222, 179, 86, 0.3);
+            z-index: 3;
+            text-align: center;
+            display: none;
+        }
+
+        /* Style for the feedback text */
+        #feedback-text {
+            font-weight: bold;
+            color: #cf1d1d;
+            font-size: x-large;
+        }
+
+
+        /* Add styles for social media links */
+        #social-media-links {
+            position: fixed;
+            top: 1%;
+            right: 1%;
+            display: flex;
+            gap: 10px;
+        }
+
+        #social-media-links a {
+            display: block;
+            width: 30px; /* Adjust the width of the icons */
+            height: 30px; /* Adjust the height of the icons */
+        }
+
+        #social-media-links img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #social-media-links img:hover {
+            transform: scale(1.2); /* Add a subtle scaling effect on hover */
+        }
+
+        
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+        <script type="text/javascript">
+            const URL = "https://teachablemachine.withgoogle.com/models/Ti74F-ZEH/";
+            let model, webcam, ctx, labelContainer, maxPredictions;
+
+            let confidence = 0;
+
+            async function init() {
+                const modelURL = URL + "model.json";
+                const metadataURL = URL + "metadata.json";
+
+                model = await tmPose.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+
+                const size = 400;
+                const flip = true;
+                // webcam = new tmPose.Webcam(size, size, flip);
+                webcam = new tmPose.Webcam(size, size);
+                
+                await webcam.setup();
+                await webcam.play();
+                window.requestAnimationFrame(loop);
+
+                const canvas = document.getElementById("canvas");
+                canvas.width = size;
+                canvas.height = size;
+                ctx = canvas.getContext("2d");
+                labelContainer = document.getElementById("label-container");
+
+                // Clear previous progress bars and labels
+                labelContainer.innerHTML = '';
+
+                for (let i = 0; i < maxPredictions; i++) {
+                    const progressContainer = document.createElement("div");
+                    progressContainer.className = "progress-bar-container";
+
+                    const progressBar = document.createElement("div");
+                    progressBar.className = "progress-bar";
+                    progressBar.style.width = '0%';  // Set initial width to 0
+                    progressContainer.appendChild(progressBar); // Progress bar
+
+                    const textContainer = document.createElement("div");
+                    textContainer.className = "text-container";
+
+                    const textContent = document.createElement("div");
+                    textContent.className = "text-content";
+                    textContainer.appendChild(textContent); // Text content
+
+                    progressContainer.appendChild(textContainer); // Text container
+
+                    labelContainer.appendChild(progressContainer);
+
+                    // Assign different colors to each progress bar
+                    const color = getRandomColor();
+                    progressBar.style.backgroundColor = color;
+
+                    // Hide progress bars for non-selected poses
+                    progressContainer.style.display = "none";
+                }
+
+                // Update predictions with the initially selected pose
+                const selectedPose = getSelectedPose();
+                document.getElementById("dropdown1").value = selectedPose; // Set the selected value
+
+                const selectedLanguage = getSelectedLanguage();
+                document.getElementById("languageDropdown").value = selectedLanguage; // Set the selected value
+                await predict(selectedPose,selectedLanguage);
+
+                // Update image based on the selected pose
+                updateImageSource(selectedPose);
+            }
+
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+
+            async function loop(timestamp) {
+                webcam.update();
+                const selectedPose = document.getElementById("dropdown1").value;
+                const selectedLanguage = document.getElementById("languageDropdown").value;
+                await predict(selectedPose, selectedLanguage);
+                window.requestAnimationFrame(loop);
+            }
+            
+            function drawPose(pose) {
+                if (pose) {
+                    const minPartConfidence = 0.5;
+                    tmPose.drawPose(pose, minPartConfidence, ctx);
+                }
+            }
+
+            async function predict(selectedPose,selectedLanguage) {
+                const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+                const prediction = await model.predict(posenetOutput);
+            
+                const progressContainer = document.getElementById("label-container");
+
+                if (progressContainer) {
+                    for (let i = 0; i < maxPredictions; i++) {
+                        const className = prediction[i].className;
+                        const confidence = prediction[i].probability.toFixed(2) * 100;
+                        const progressBar = progressContainer.children[i].querySelector(".progress-bar");
+                        const textContent = progressContainer.children[i].querySelector(".text-content");
+
+                        if (className === selectedPose) {
+                            // Set label text and update progress bar for the selected class
+                            textContent.innerHTML = `${selectedPose}: ${confidence.toFixed(2)}%`;
+                            progressBar.innerHTML = '';
+                            updateProgressBar(confidence, progressBar);
+                            // Show progress bar container for the selected pose
+                            progressContainer.children[i].style.display = "block";
+
+                            // Add feedback based on pose and score
+                        showFeedback(selectedPose, confidence,selectedLanguage);
+
+
+                        } else {
+                            // Hide progress bar container for non-selected poses
+                            progressContainer.children[i].style.display = "none";
+                        }
+                    }
+                }
+
+                drawPose(pose);
+            
+                // Update image based on the selected pose
+                updateImageSource(selectedPose);
+            }
+
+        
+            function updateProgressBar(percentage, progressBar) {
+                progressBar.style.width = percentage + '%';
+
+                // Change progress bar color based on the threshold (80%)
+                if (percentage > 80) {
+                    progressBar.style.backgroundColor = 'green';
+                } else {
+                    progressBar.style.backgroundColor = 'yellow';
+                }
+            }
+
+            function drawPose(pose) {
+                if (webcam.canvas) {
+                    ctx.drawImage(webcam.canvas, 0, 0);
+                    if (pose) {
+                        const minPartConfidence = 0.5;
+                        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                    }
+                }
+            }
+
+            // Function to get the selected pose from localStorage
+            function getSelectedPose() {
+                const storedPose = localStorage.getItem('selectedPose');
+                return storedPose ? storedPose : "Aramandi"; // Default to "Aramandi" if not found
+            }
+
+            // Function to get the selected pose from localStorage
+            function getSelectedLanguage() {
+                const storedLangauge = localStorage.getItem('selectedLanguage');
+                return storedLangauge ? storedLangauge : "English"; // Default to "English" if not found
+            }
+            // Function to store the selected pose in localStorage
+            function setSelectedPose(selectedPose) {
+                localStorage.setItem('selectedPose', selectedPose);
+            }
+
+            // Function to store the selected pose in localStorage
+            function setSelectedLanguage(selectedLanguage) {
+                localStorage.setItem('selectedLanguage', selectedLanguage);
+            }
+            // Function to update the image source based on the selected pose
+            function updateImageSource(selectedPose) {
+                const img = document.getElementById("poseImage");
+                img.src = `images/${selectedPose.toLowerCase()}.jpg`;
+            }
+
+            
+
+            function showFeedback(selectedPose, confidence, selectedLanguage) {
+                const feedbackContainer = document.getElementById("feedback-container");
+                const feedbackText = document.getElementById("feedback-text");
+               // console.log(selectedLanguage+" "+selectedPose+" "+confidence)
+                if (feedbackContainer && feedbackText) {
+                    feedbackContainer.style.display = "block";
+        
+                  //  if (confidence < 80) {
+                        // Add feedback for scores below 80%
+                        switch (selectedPose) {
+                            case "Aramandi":
+                                feedbackText.innerHTML = getFeedbackText(selectedPose, selectedLanguage, confidence);
+                                break;
+                            case "Muramandi":
+                                feedbackText.innerHTML = getFeedbackText(selectedPose, selectedLanguage, confidence);
+                                break;
+                            // Add more cases for other poses if needed
+                            default:
+                                feedbackText.innerHTML = "Keep refining your pose.";
+                                break;
+                      //  }
+                    } /*else {
+                        // Add feedback for scores above or equal to 80%
+                        feedbackText.innerHTML = "Perfect Pose!";
+                    }*/
+                }
+            }
+        
+            function getFeedbackText(selectedPose, selectedLanguage, confidence) {
+                // Add logic to determine feedback text based on pose, language, and confidence
+        
+                switch (selectedLanguage) {
+                    case "English":
+                    
+                        switch(selectedPose) {
+                            case "Aramandi":
+                                return confidence < 30 ? "Aramandi - Try to position your body as shown in picture":
+                                confidence < 50 ? "Half sit! Keep Trying" : 
+                                confidence < 80 ? "Half sit! Your heels point towards each other, while your toes point to opposite side. ":
+                                "Perfect Pose"
+                                break;
+                            case "Muramandi":
+                                return confidence < 30 ? "Muramandi - Try to position your body as shown in picture":
+                                confidence < 50 ? "Sit Fully! Keep Trying" : 
+                                confidence < 80 ? "Sit Fully! Spread your knees apart while sitting as low as possible.":
+                                "Perfect Pose"
+                                break;
+                            default:
+                                return "Keep refining your pose.";
+                            
+                            }
+                            break;
+                    case "Telugu":
+                        switch(selectedPose) {
+                            case "Aramandi":
+                                return confidence < 30 ? "అరమండి - చిత్రంలో చూపిన విధంగా మీ శరీరాన్ని ఉంచడానికి ప్రయత్నించండి":
+                                confidence < 50 ? "సగం కూర్చోండి! ప్రయత్నిస్తూ ఉండు" : 
+                                (confidence>=50 && confidence < 80) ? "సగం కూర్చోండి! మీ మడమలు ఒకదానికొకటి చూపుతాయి, అయితే మీ కాలి వేళ్లు ఎదురుగా ఉంటాయి.":
+                                    "పరిపూర్ణ భంగిమ"
+                                break;
+                            case "Muramandi":
+                            return confidence < 30 ? "మురమండి - చిత్రంలో చూపిన విధంగా మీ శరీరాన్ని ఉంచడానికి ప్రయత్నించండి":        
+                            confidence < 50 ? "పూర్తిగా కూర్చోండి - ప్రయత్నిస్తూ ఉండండి" : 
+                                (confidence>=50 && confidence < 80) ? "పూర్తిగా కూర్చోండి:వీలైనంత తక్కువగా కూర్చున్నప్పుడు మీ మోకాళ్లను వేరుగా ఉంచండి.":
+                                    "పరిపూర్ణ భంగిమ"
+                                break;
+                            default:
+                                return "సగం కూర్చోండి - మీ భంగిమను మెరుగుపరచడం కొనసాగించండి.";  
+                        }
+                        break;
+                    case "Tamil":
+                        switch(selectedPose) {
+                            case "Aramandi":
+                            return confidence < 30 ? "அரமண்டி - படத்தில் காட்டப்பட்டுள்ளபடி உங்கள் உடலை வைக்க முயற்சிக்கவும்":
+                            confidence < 50 ? "பாதி உட்காருங்கள்! தொடர்ந்து முயற்சி செய்யுங்கள்" : 
+                                confidence < 80 ? "பாதி உட்காருங்கள்! உங்கள் குதிகால் ஒன்றையொன்று நோக்கிச் சுட்டிக்காட்டுகிறது, அதே சமயம் உங்கள் கால்விரல்கள் எதிர் பக்கமாகச் சுட்டிக்காட்டுகின்றன. ":
+                                "சரியான போஸ்"
+                            break;
+                        case "Muramandi":
+                            return confidence < 30 ? "முரமாண்டி - படத்தில் காட்டப்பட்டுள்ளபடி உங்கள் உடலை வைக்க முயற்சிக்கவும்":
+                            confidence < 50 ? "முழுமையாக உட்காருங்கள்! தொடர்ந்து முயற்சி செய்யுங்கள்" : 
+                                confidence < 80 ? "முழுமையாக உட்காருங்கள்! முடிந்தவரை கீழே உட்கார்ந்திருக்கும் போது உங்கள் முழங்கால்களை விரித்து வைக்கவும்":
+                                "சரியான போஸ்"
+                            break;
+                        default:
+                        return "உங்கள் போஸைத் தொடர்ந்து செம்மைப்படுத்துங்கள்.";
+                        
+                        }
+                        break;
+
+                
+                    case "Hindi":
+                        switch(selectedPose) {
+                            case "Aramandi":
+                            return confidence < 30 ? "अरमांडी - अपने शरीर को चित्र में दिखाए अनुसार स्थिति में लाने का प्रयास करें":
+                            confidence < 50 ? "आधा बैठो! प्रयास जारी रखें" : 
+                                confidence < 80 ? "आधा बैठो! आपकी एड़ियाँ एक दूसरे की ओर इशारा करती हैं, जबकि आपके पैर की उंगलियाँ विपरीत दिशा की ओर इशारा करती हैं।":
+                                "उत्तम मुद्रा"
+                            break;
+                        case "Muramandi":
+                            return confidence < 30 ? "मुरामंडी - अपने शरीर को चित्र में दिखाए अनुसार स्थिति में लाने का प्रयास करें":
+                            confidence < 50 ? "पूरी तरह बैठो! प्रयास जारी रखें" : 
+                                confidence < 80 ? "पूरी तरह बैठो! जितना संभव हो उतना नीचे बैठते हुए अपने घुटनों को फैलाएं।":
+                                "उत्तम मुद्रा"
+                            break;
+                        default:
+                        return "अपने पोज़ को निखारते रहें.";
+                        
+                        }
+                        break;
+                    
+                    default:
+                        return "Keep refining your pose.";
+                }
+            }
+        
+            function dropdownChange() {
+                const selectedPose = document.getElementById("dropdown1").value;
+                const selectedLanguage = document.getElementById("languageDropdown").value;
+                setSelectedPose(selectedPose);
+                setSelectedLanguage(selectedLanguage);
+                predict(selectedPose, selectedLanguage);
+                updateImageSource(selectedPose);
+                showFeedback(selectedPose, confidence, selectedLanguage);
+            }
+            
+            function languageDropdownChange() {
+                const selectedPose = document.getElementById("dropdown1").value;
+                const selectedLanguage = document.getElementById("languageDropdown").value;
+                setSelectedPose(selectedPose);
+                setSelectedLanguage(selectedLanguage);
+                predict(selectedPose, selectedLanguage);
+                updateImageSource(selectedPose);
+                showFeedback(selectedPose, confidence, selectedLanguage);
+            }
+
+            function readText(text,selectedLanguage) {
+                //var text = document.getElementById('text-to-read').value;
+                var speech = new SpeechSynthesisUtterance();
+          
+                speech.text = text;
+
+                switch (selectedLanguage) {
+
+                    case "Telugu":
+                        speech.lang = "te-IN";
+                        break;
+                    case "English":
+                        speech.lang = "en-US";
+                        break;
+                    case "Hindi":
+                        speech.lang = "hi-IN";
+                        break;
+                    case "Tamil":
+                        speech.lang = "ta-IN"
+                        break;
+                    default:
+                        speech.lang = "en-US";
+                }
+               
+                
+
+                //speech.lang = language;
+                speech.volume = 1;
+                speech.rate = 1;
+                speech.pitch = 1;
+          
+                window.speechSynthesis.speak(speech);
+            }
+
+            function readText(text) {
+                //var text = document.getElementById('text-to-read').value;
+                var speech = new SpeechSynthesisUtterance();
+          
+                speech.text = text;
+                speech.volume = 1;
+                speech.rate = 1;
+                speech.pitch = 1;
+          
+                window.speechSynthesis.speak(speech);
+            }
+            
+                // Function to play the sound
+                function playSound() {
+                    var audio = document.getElementById("feedback-text").textContent;
+
+                    var selectedLanguage =  getSelectedLanguage() //document.getElementById
+                    //audio.play();
+
+                    //readText(audio,selectedLanguage);
+                    readText(audio);    
+                }
+        </script>
+</head>
+<body onload="init()">
+
+    <!-- Page title -->
+    <!-- <h1 id="stepSyncTitle">StepSync</h1>
+
+ -->
+ <div id="logo-container">
+    <img id="logo" src="images/StepSyncLogo2.png" alt="StepSync">
+</div>
+    <!-- Dropdowns outside the panels -->
+    <div id="dropdownContainer">
+        <div class="dropdown-left">
+            <label for="dropdown1"><b>Bharathanatyam Pose:</b></label>
+            <select id="dropdown1" onchange="dropdownChange()">               
+                <option value="Aramandi">Aramandi</option>
+                <option value="Muramandi">Muramandi</option>
+            </select>
+        </div>
+     <!-- Button to play the sound -->
+    
+        <div class="dropdown-right">
+            <div class="dropdown-right">
+                <button onclick="playSound()"><b>Auditory Feedback</b></button>
+               </div>
+            <label for="languageDropdown"><b>Language:</b></label>
+            <select id="languageDropdown" onchange="languageDropdownChange()">
+                <option value="English">English</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Hindi">Hindi</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Social media share links -->
+<div id="social-media-links">
+    <a href="https://twitter.com/share" target="_blank" rel="noopener noreferrer">
+        <img src="images/twitter.png" alt="Twitter Share">
+    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener noreferrer">
+        <img src="images/facebook.png" alt="Facebook Share">
+    </a>
+    <a href="https://www.instagram.com/bharathanatyam/" target="_blank" rel="noopener noreferrer">
+        <img src="images/instagram.png" alt="Instagram Share">
+    </a> 
+</div>
+
+    <div id="container">
+        <!-- First Panel -->
+        <div class="panel">
+            <div class="header">Teachable Machine Pose Model <img src="teachable-machine-logo.png"></div>
+            <div class="canvas-container" id="canvas-container">
+                <canvas id="canvas" class="canvas" width="400" height="400"></canvas>
+            </div>
+            
+           <br/>
+           <br/>
+            <div class="label-container" id="label-container">
+                
+                
+            </div>
+            <br/>
+             <!-- Feedback Container -->
+             <div id="feedback-container" style="display: none;">
+                <div id="feedback-text" style="font-weight: bold; margin-top: 10px;"></div>
+            </div>
+            <audio id="myAudio">
+                <source src="sound.m4a" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            
+           
+            
+            
+        </div>
+
+        <!-- Second Panel -->
+        <div class="panel">
+            <img id="poseImage" width="300" height="300" alt="Pose">
+        </div>
+    </div>
+
+
+
+</body>
+</html>
